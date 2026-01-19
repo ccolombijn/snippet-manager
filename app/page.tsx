@@ -4,8 +4,10 @@ import SnippetDeleteButton from '@/components/SnippetDeleteButton';
 import SnippetSearch from '@/components/SnippetSearch';
 import CopyButton from '@/components/CopyButton';
 import CodeBlock from '@/components/CodeBlock';
+import QuoteGenerator from '@/components/QuoteGenerator';
 
 export default async function Home({
+  
   searchParams,
 }: {
   searchParams: Promise<{ query?: string }>;
@@ -25,6 +27,7 @@ export default async function Home({
     <div className="p-8 max-w-2xl mx-auto">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold">Snippet Manager</h1>
+        
         <Link 
           href="/snippets/new" 
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -32,7 +35,7 @@ export default async function Home({
           New
         </Link>
       </div>
-
+      <QuoteGenerator />
       <SnippetSearch />
 
       <div className="flex flex-col gap-4">
@@ -53,7 +56,7 @@ export default async function Home({
                 </div>
               </div>
               <div className="relative">
-                <CodeBlock code={snippet.code} />
+                <CodeBlock code={snippet.code} language={snippet.language} />
                 <CopyButton code={snippet.code} />
               </div>
             </div>

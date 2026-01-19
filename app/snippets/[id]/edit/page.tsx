@@ -42,7 +42,7 @@ export default async function SnippetEditPage({ params }: SnippetEditPageProps) 
 
         <div className="flex flex-col gap-2">
           <label htmlFor="code" className="font-semibold">Code</label>
-          <SnippetEditor defaultValue={snippet.code} />
+          <SnippetEditor defaultValue={snippet.code} defaultLanguage={snippet.language} />
         </div>
 
         <div className="flex gap-4 items-center mt-2">

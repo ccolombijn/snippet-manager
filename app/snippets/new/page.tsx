@@ -2,6 +2,7 @@ import { createSnippet } from '@/app/actions';
 import Link from 'next/link';
 import SnippetEditor from '@/components/SnippetEditor';
 
+
 export default function SnippetCreatePage() {
   return (
     <div className="p-8 max-w-xl mx-auto">

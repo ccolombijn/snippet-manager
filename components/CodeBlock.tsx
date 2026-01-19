@@ -3,10 +3,10 @@
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-export default function CodeBlock({ code }: { code: string }) {
+export default function CodeBlock({ code, language = 'typescript' }: { code: string, language?: string }) {
   return (
     <SyntaxHighlighter
-      language="typescript"
+      language={language}
       style={vscDarkPlus}
       customStyle={{
         margin: '0.5rem 0',

@@ -9,14 +9,18 @@ export async function createSnippet(formData: FormData) {
   // Extract values from the HTML form
   const title = formData.get('title') as string;
   const code = formData.get('code') as string;
+  const language = formData.get('language') as string;
+
 
   // Create the record in SQLite
   await db.snippet.create({
     data: {
       title,
       code,
+      language,
     },
   });
+
 
   // Redirect back to the homepage
   redirect('/');
@@ -33,10 +37,11 @@ export async function deleteSnippet(id: number) {
 export async function editSnippet(id: number, formData: FormData) {
   const title = formData.get('title') as string;
   const code = formData.get('code') as string;
+  const language = formData.get('language') as string;
 
   await db.snippet.update({
     where: { id },
-    data: { title, code },
+    data: { title, code, language },
   });
 
   redirect('/');
