@@ -2,6 +2,8 @@
 'use client';
 
 import { deleteSnippet } from '@/app/actions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default function SnippetDeleteButton({ id }: { id: number }) {
   return (
@@ -14,7 +16,7 @@ export default function SnippetDeleteButton({ id }: { id: number }) {
       }}
     >
       <button type="submit" className="text-red-500 hover:text-red-700">
-        Delete
+        <FontAwesomeIcon icon={faTrash} />
       </button>
     </form>
   );

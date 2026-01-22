@@ -5,6 +5,8 @@ import SnippetSearch from '@/components/SnippetSearch';
 import CopyButton from '@/components/CopyButton';
 import CodeBlock from '@/components/CodeBlock';
 import QuoteGenerator from '@/components/QuoteGenerator';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faCode } from '@fortawesome/free-solid-svg-icons';
 
 export default async function Home({
   
@@ -26,7 +28,7 @@ export default async function Home({
   return (
     <div className="p-8 max-w-2xl mx-auto">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold">Snippet Manager</h1>
+        <h1 className="text-2xl font-bold"><FontAwesomeIcon icon={faCode} />Snippet Manager</h1>
         
         <Link 
           href="/snippets/new" 
@@ -51,11 +53,14 @@ export default async function Home({
                   </Link>
                 </h2>
                 <div className="flex items-center gap-2">
-                  <Link href={`/snippets/${snippet.id}/edit`} className="text-blue-500 hover:text-blue-700">Edit</Link>
+                  <Link href={`/snippets/${snippet.id}/edit`} className="text-blue-500 hover:text-blue-700">
+                    <FontAwesomeIcon icon={faPen} />
+                  </Link>
                   <SnippetDeleteButton id={snippet.id} />
                 </div>
               </div>
               <div className="relative">
+                <p className="text-sm text-gray-500">{snippet.language}</p>
                 <CodeBlock code={snippet.code} language={snippet.language} />
                 <CopyButton code={snippet.code} />
               </div>

@@ -3,9 +3,15 @@
 import Editor from '@monaco-editor/react';
 import { useState, useEffect } from 'react';
 
-export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'typescript' }: { defaultValue?: string, defaultLanguage?: string }) {
+export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'typescript', code: externalCode }: { defaultValue?: string, defaultLanguage?: string, code?: string }) {
   const [code, setCode] = useState(defaultValue);
   const [language, setLanguage] = useState(defaultLanguage);
+
+  useEffect(() => {
+    if (externalCode !== undefined) {
+      setCode(externalCode);
+    }
+  }, [externalCode]);
 
   function handleEditorChange(value: string | undefined) {
     setCode(value || '');
@@ -43,7 +49,7 @@ export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'ty
         height="40vh"
         language={language}
         theme="vs-dark"
-        defaultValue={defaultValue}
+        value={code}
         onChange={handleEditorChange}
         options={{
           minimap: { enabled: false },
