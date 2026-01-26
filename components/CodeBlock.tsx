@@ -1,3 +1,4 @@
+// components/CodeBlock.tsx
 'use client';
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';

@@ -13,6 +13,7 @@ const LANGUAGES = [
 
 export default function SnippetCreatePage() {
   const [description, setDescription] = useState('');
+  const [title, setTitle] = useState('');
   const [language, setLanguage] = useState('TypeScript');
   const [generatedCode, setGeneratedCode] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
@@ -31,10 +32,37 @@ export default function SnippetCreatePage() {
       if (data.code) {
         setGeneratedCode(data.code);
       }
+
+      if (!title) {
+        const titleResponse = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ body: `Generate a short title for a code snippet with this description: ${description}. Just show the title and nothing else.` })
+        });
+        const titleData = await titleResponse.json();
+        if (titleData.output) setTitle(titleData.output);
+      }
     } catch (error) {
       console.error("Failed to generate code", error);
     } finally {
       setIsGenerating(false);
+    }
+  };
+
+  const handleCodeBlur = async (code: string) => {
+    console.log("Generating title from code...");
+    //if (title || !code.trim()) return;
+    
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ body: `Generate a short title for this code snippet. Just show the title and nothing else:\n${code.slice(0, 1000)}` })
+      });
+      const data = await response.json();
+      if (data.output) setTitle(data.output);
+    } catch (error) {
+      console.error("Failed to generate title from code", error);
     }
   };
 
@@ -52,6 +80,8 @@ export default function SnippetCreatePage() {
             id="title" 
             className="border rounded p-2 bg-transparent"
             placeholder="e.g. Docker Config"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
 
@@ -67,7 +97,7 @@ export default function SnippetCreatePage() {
           </button>
           {showAi && <div className="flex flex-col gap-3 mt-3">
             <textarea
-              className="border rounded p-2 bg-transparent text-sm"
+              className="border border-blue-900 shadow-md shadow-blue-500/50rounded p-2 bg-transparent text-sm"
               placeholder="Describe the code you want to generate..."
               rows={3}
               value={description}
@@ -75,7 +105,7 @@ export default function SnippetCreatePage() {
             />
             <div className="flex gap-2">
               <select 
-                className="border rounded p-2 bg-transparent flex-1"
+                className="border border-blue-900 shadow-md shadow-blue-500/50 rounded p-2 bg-transparent flex-1"
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
               >
@@ -85,9 +115,11 @@ export default function SnippetCreatePage() {
                 type="button"
                 onClick={handleGenerate}
                 disabled={isGenerating}
-                className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 disabled:opacity-50"
+                className="bg-purple-600 shadow-lg shadow-purple-500/50 text-white px-4 py-2 rounded hover:bg-purple-700 disabled:opacity-50"
               >
-                {isGenerating ? 'Generating...' : 'Generate'}
+                <svg className="float-left" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+  <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
+</svg> {isGenerating ? 'Generating...' : 'Generate'}
               </button>
             </div>
           </div>}
@@ -95,7 +127,7 @@ export default function SnippetCreatePage() {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="code" className="font-semibold"><FontAwesomeIcon icon={faCode} />Code</label>
-          <SnippetEditor code={generatedCode} />
+          <SnippetEditor code={generatedCode} onBlur={handleCodeBlur} />
         </div>
 
         <div className="flex gap-4 items-center mt-2">

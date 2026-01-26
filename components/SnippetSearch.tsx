@@ -20,7 +20,7 @@ export default function SnippetSearch() {
   return (
     <div className="mb-8">
       <input
-        className="border rounded p-2 w-full bg-transparent"
+        className="border border-blue-900 shadow-md shadow-blue-500/50 rounded p-2 w-full bg-transparent"
         placeholder="Search snippets by title..."
         onChange={(e) => handleSearch(e.target.value)}
         defaultValue={searchParams.get('query')?.toString()}

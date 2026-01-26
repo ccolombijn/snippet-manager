@@ -3,7 +3,7 @@
 import Editor from '@monaco-editor/react';
 import { useState, useEffect } from 'react';
 
-export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'typescript', code: externalCode }: { defaultValue?: string, defaultLanguage?: string, code?: string }) {
+export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'typescript', code: externalCode, onBlur }: { defaultValue?: string, defaultLanguage?: string, code?: string, onBlur?: (code: string) => void }) {
   const [code, setCode] = useState(defaultValue);
   const [language, setLanguage] = useState(defaultLanguage);
 
@@ -15,6 +15,14 @@ export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'ty
 
   function handleEditorChange(value: string | undefined) {
     setCode(value || '');
+  }
+
+  function handleEditorDidMount(editor: any) {
+    editor.onDidBlurEditorText(() => {
+      if (onBlur) {
+        onBlur(editor.getValue());
+      }
+    });
   }
 
   useEffect(() => {
@@ -41,7 +49,7 @@ export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'ty
   }, [code]);
 
   return (
-    <div className="border rounded overflow-hidden pt-2 bg-[#1e1e1e]">
+    <div className="border border-blue-900 shadow-md shadow-blue-500/50 rounded overflow-hidden pt-2 bg-[#1e1e1e]">
       <div className="px-4 py-1 text-xs text-gray-400 bg-[#1e1e1e] border-b border-gray-800">
         Detected: {language}
       </div>
@@ -51,6 +59,7 @@ export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'ty
         theme="vs-dark"
         value={code}
         onChange={handleEditorChange}
+        onMount={handleEditorDidMount}
         options={{
           minimap: { enabled: false },
         }}
