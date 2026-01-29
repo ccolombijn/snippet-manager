@@ -3,7 +3,7 @@
 import Editor from '@monaco-editor/react';
 import { useState, useEffect } from 'react';
 
-export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'typescript', code: externalCode, onBlur }: { defaultValue?: string, defaultLanguage?: string, code?: string, onBlur?: (code: string) => void }) {
+export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'typescript', code: externalCode, onBlur, onLanguageChange }: { defaultValue?: string, defaultLanguage?: string, code?: string, onBlur?: (code: string) => void, onLanguageChange?: (language: string) => void }) {
   const [code, setCode] = useState(defaultValue);
   const [language, setLanguage] = useState(defaultLanguage);
 
@@ -39,6 +39,9 @@ export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'ty
         const data = await response.json();
         if (data.language) {
           setLanguage(data.language);
+          if (onLanguageChange) {
+            onLanguageChange(data.language);
+          }
         }
       } catch (error) {
         console.error("Failed to detect language", error);

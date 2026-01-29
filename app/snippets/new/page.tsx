@@ -66,6 +66,15 @@ export default function SnippetCreatePage() {
     }
   };
 
+  const handleLanguageChange = (detectedLang: string) => {
+    const match = LANGUAGES.find(l => l.toLowerCase() === detectedLang.toLowerCase());
+    if (match) {
+      setLanguage(match);
+    } else {
+      setLanguage(detectedLang);
+    }
+  };
+
   return (
     <div className="p-8 max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Create a Snippet</h1>
@@ -78,7 +87,7 @@ export default function SnippetCreatePage() {
           <input 
             name="title" 
             id="title" 
-            className="border rounded p-2 bg-transparent"
+            className="border border-blue-900 shadow-lg shadow-blue-500/50 rounded p-2 bg-transparent"
             placeholder="e.g. Docker Config"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -97,15 +106,15 @@ export default function SnippetCreatePage() {
           </button>
           {showAi && <div className="flex flex-col gap-3 mt-3">
             <textarea
-              className="border border-blue-900 shadow-md shadow-blue-500/50rounded p-2 bg-transparent text-sm"
+              className="border border-blue-900 shadow-lg shadow-blue-500/50rounded p-2 bg-transparent text-sm"
               placeholder="Describe the code you want to generate..."
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <div className="flex gap-2">
+            <div className="flex gap-2"> 
               <select 
-                className="border border-blue-900 shadow-md shadow-blue-500/50 rounded p-2 bg-transparent flex-1"
+                className="border border-blue-900 shadow-lg shadow-blue-500/50 rounded p-2 bg-transparent flex-1"
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
               >
@@ -127,13 +136,16 @@ export default function SnippetCreatePage() {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="code" className="font-semibold"><FontAwesomeIcon icon={faCode} />Code</label>
-          <SnippetEditor code={generatedCode} onBlur={handleCodeBlur} />
+          <SnippetEditor code={generatedCode} onBlur={handleCodeBlur} 
+          //onLanguageChange={handleLanguageChange} 
+          />
         </div>
 
         <div className="flex gap-4 items-center mt-2">
             <button 
                 type="submit" 
-                className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
+                className="bg-blue-500 
+                text-white px-6 py-2 rounded hover:bg-blue-600 shadow-lg shadow-blue-500/50"
             >
                 Save
             </button>
