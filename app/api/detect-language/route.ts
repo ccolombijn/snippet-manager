@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const { code } = await request.json();
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
-    const prompt = `Detect the programming language of the following code snippet. Return only the language name in lowercase (e.g., typescript, python, rust, javascript, html, css). If unknown or plain text, return 'plaintext'. Do not include markdown formatting.\n\nCode:\n${code}`;
+    const prompt = `Detect the programming language or framework of the following code snippet. Return the language name in lowercase (e.g., typescript, python, rust, javascript, html, css). If it is a specific framework like Next.js or Laravel, return the framework name (e.g., next.js, laravel). If unknown or plain text, return 'plaintext'. Do not include markdown formatting.\n\nCode:\n${code}`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;

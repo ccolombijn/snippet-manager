@@ -3,6 +3,44 @@
 import Editor from '@monaco-editor/react';
 import { useState, useEffect } from 'react';
 
+const FRAMEWORK_MAPPINGS: Record<string, string> = {
+  'react': 'javascript',
+  'vue': 'javascript',
+  'angular': 'typescript',
+  'svelte': 'javascript',
+  'next.js': 'javascript',
+  'nuxt.js': 'javascript',
+  'express': 'javascript',
+  'nest.js': 'typescript',
+  'django': 'python',
+  'flask': 'python',
+  'fastapi': 'python',
+  'pytorch': 'python',
+  'tensorflow': 'python',
+  'spring boot': 'java',
+  'ruby on rails': 'ruby',
+  'laravel': 'php',
+  'symfony': 'php',
+  'codeigniter': 'php',
+  'asp.net core': 'c#',
+  'blazor': 'c#',
+  'flutter': 'dart',
+  'react-native': 'javascript',
+  'ionic': 'javascript',
+  'xamarin': 'c#',
+  'swiftui': 'swift',
+  'vapor': 'swift',
+  'gin': 'go',
+  'fiber': 'go',
+  'echo': 'go',
+  'rocket': 'rust',
+  'actix': 'rust',
+  'phoenix': 'elixir',
+  'play': 'scala',
+  'ktor': 'kotlin',
+  'qt': 'c++'
+};
+
 export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'typescript', code: externalCode, onBlur, onLanguageChange }: { defaultValue?: string, defaultLanguage?: string, code?: string, onBlur?: (code: string) => void, onLanguageChange?: (language: string) => void }) {
   const [code, setCode] = useState(defaultValue);
   const [language, setLanguage] = useState(defaultLanguage);
@@ -58,7 +96,7 @@ export default function SnippetEditor({ defaultValue = '', defaultLanguage = 'ty
       </div>
       <Editor
         height="40vh"
-        language={language}
+        language={FRAMEWORK_MAPPINGS[language.toLowerCase()] || language}
         theme="vs-dark"
         value={code}
         onChange={handleEditorChange}

@@ -76,7 +76,7 @@ export default function SnippetCreatePage() {
   };
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
+    <div className="p-8 max-w-2xl mx-auto ">
       <h1 className="text-2xl font-bold mb-4">Create a Snippet</h1>
       
       <form action={createSnippet} className="flex flex-col gap-4">
@@ -95,7 +95,7 @@ export default function SnippetCreatePage() {
         </div>
 
         {/* AI Generator Section */}
-        <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded border border-gray-200 dark:border-gray-700">
+        <div className="bg-gray-100 dark:bg-linear-to-b from-blue-950 to-gray-800 p-4 rounded border border-gray-200 dark:border-gray-700">
           <button 
             type="button" 
             onClick={() => setShowAi(!showAi)}
@@ -106,7 +106,7 @@ export default function SnippetCreatePage() {
           </button>
           {showAi && <div className="flex flex-col gap-3 mt-3">
             <textarea
-              className="border border-blue-900 shadow-lg shadow-blue-500/50rounded p-2 bg-transparent text-sm"
+              className="border border-blue-900 shadow-lg shadow-blue-500/50 rounded p-2 bg-transparent text-sm"
               placeholder="Describe the code you want to generate..."
               rows={3}
               value={description}
@@ -114,7 +114,7 @@ export default function SnippetCreatePage() {
             />
             <div className="flex gap-2"> 
               <select 
-                className="border border-blue-900 shadow-lg shadow-blue-500/50 rounded p-2 bg-transparent flex-1"
+                className="border border-blue-900 shadow-lg shadow-purple-600/50 rounded p-2 bg-transparent flex-1"
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
               >
@@ -124,7 +124,7 @@ export default function SnippetCreatePage() {
                 type="button"
                 onClick={handleGenerate}
                 disabled={isGenerating}
-                className="bg-purple-600 shadow-lg shadow-purple-500/50 text-white px-4 py-2 rounded hover:bg-purple-700 disabled:opacity-50"
+                className="bg-linear-to-b from-blue-900 to-purple-600 shadow-lg shadow-purple-500/50 text-white px-4 py-2 rounded hover:bg-purple-700 disabled:opacity-50"
               >
                 <svg className="float-left" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
   <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
@@ -144,7 +144,7 @@ export default function SnippetCreatePage() {
         <div className="flex gap-4 items-center mt-2">
             <button 
                 type="submit" 
-                className="bg-blue-500 
+                className="bg-linear-to-b from-blue-900 to-blue-500 
                 text-white px-6 py-2 rounded hover:bg-blue-600 shadow-lg shadow-blue-500/50"
             >
                 Save
